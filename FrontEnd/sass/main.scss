@@ -1,0 +1,65 @@
+/* Reset */
+@import "reset.scss";
+
+/* Variables et Mixins */
+@import "variables/design";
+@import "mixins/shadow-border.scss";
+
+/* Components */
+@import "components/header";
+@import "components/footer";
+@import "components/modale";
+
+/* Pages */
+@import "pages/home";
+@import "pages/login";
+
+body {
+  max-width: 1140px;
+  margin: auto;
+  font-family: "Work Sans";
+  font-size: 14px;
+}
+
+section {
+  margin: 50px 0;
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  font-family: "Syne";
+  font-size: 22px;
+  font-weight: 800;
+  color: $color_1;
+  span {
+    font-family: "Work Sans";
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}
+
+h2 {
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 30px;
+  color: $color_2;
+}
+
+nav {
+  ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+  }
+  li {
+    padding: 0 10px;
+    font-size: 1.2em;
+    a {
+      text-decoration: none;
+    }
+    :hover {
+      color: $color_1;
+    }
+  }
+}

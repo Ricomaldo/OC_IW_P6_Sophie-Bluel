@@ -1,0 +1,6 @@
+# Fichiers de configuration spécifiques à l'environnement
+.stylelintrc.json
+.vscode
+
+# Dossier des dépendances Node.js
+node_modules/
