@@ -1,7 +1,6 @@
 #introduction {
   display: flex;
   align-items: center;
-
   figure {
     flex: 1;
   }
@@ -28,10 +27,31 @@
 #portfolio {
   h2 {
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 60px;
+  }
+  .boutons-filtre {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 50px;
+
+    button {
+      font-family: Syne;
+      font-size: 16px;
+      padding: 12px 20px;
+      color: $secundary-color;
+      background-color: $white;
+      border: solid 1px $secundary-color;
+      border-radius: 60px;
+      &:hover {
+        cursor: pointer;
+        color: $white;
+        background-color: $secundary-color;
+      }
+    }
   }
 }
-.gallery {
+.galerie {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -42,40 +62,12 @@
     width: 100%;
   }
 }
+
 #contact {
-  width: 50%;
-  margin: auto;
-  > * {
-    text-align: center;
-  }
-  h2 {
-    margin-bottom: 20px;
-  }
-  form {
-    text-align: left;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
+  label {
+    margin: 42px 0 8px 0; // Ajustement spécifique pour #contact
   }
 
-  input {
-    height: 50px;
-    font-size: 1.2em;
-    @include shadow-border;
-    &[type="submit"] {
-      font-family: "Syne";
-      font-weight: 700;
-      color: $white;
-      background-color: $color_2;
-      margin: 2em auto;
-      width: 180px;
-      text-align: center;
-      border-radius: 60px;
-    }
-  }
-  label {
-    margin: 2em 0 1em 0;
-  }
   textarea {
     @include shadow-border;
   }

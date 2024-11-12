@@ -1,0 +1,15 @@
+@mixin bouton-submit($bg-color, $bg-color-hover) {
+  font-family: "Syne";
+  font-weight: 700;
+  color: $white;
+  background-color: $bg-color;
+  margin: 37px auto 32px;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $bg-color-hover;
+  }
+}

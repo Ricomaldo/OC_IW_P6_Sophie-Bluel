@@ -1,5 +1,43 @@
 header {
   display: flex;
   justify-content: space-between;
-  margin: 50px 0;
+  margin: 50px 0 150px;
+  h1 {
+    display: flex;
+    flex-direction: column;
+    font-family: "Syne";
+    font-size: 22px;
+    font-weight: 800;
+    color: $primary-color;
+    span {
+      font-family: "Work Sans";
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: $span-color;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+  }
+  nav {
+    ul {
+      display: flex;
+      align-items: center;
+      list-style-type: none;
+    }
+    li {
+      padding: 0 10px;
+      font-size: 1.2em;
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          font-weight: 700;
+        }
+      }
+      img {
+        height: 22px;
+      }
+    }
+  }
 }

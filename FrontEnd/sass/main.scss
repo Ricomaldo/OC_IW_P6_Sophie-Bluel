@@ -4,6 +4,7 @@
 /* Variables et Mixins */
 @import "variables/design";
 @import "mixins/shadow-border.scss";
+@import "mixins/bouton-submit.scss";
 
 /* Components */
 @import "components/header";
@@ -14,6 +15,9 @@
 @import "pages/home";
 @import "pages/login";
 
+/* Animations */
+@import "animations/apparition.scss";
+
 body {
   max-width: 1140px;
   margin: auto;
@@ -22,44 +26,42 @@ body {
 }
 
 section {
-  margin: 50px 0;
-}
-
-h1 {
-  display: flex;
-  flex-direction: column;
-  font-family: "Syne";
-  font-size: 22px;
-  font-weight: 800;
-  color: $color_1;
-  span {
-    font-family: "Work Sans";
-    font-size: 10px;
-    letter-spacing: 0.1em;
-  }
+  margin: 50px 0 150px;
 }
 
 h2 {
   font-family: "Syne";
   font-weight: 700;
   font-size: 30px;
-  color: $color_2;
+  color: $secundary-color;
 }
+.formulaire {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 379px;
 
-nav {
-  ul {
-    display: flex;
-    align-items: center;
-    list-style-type: none;
+  h2 {
+    font-size: 30px;
+    color: $secundary-color;
   }
-  li {
-    padding: 0 10px;
-    font-size: 1.2em;
-    a {
-      text-decoration: none;
-    }
-    :hover {
-      color: $color_1;
+
+  form {
+    text-align: left;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    height: 50px;
+    font-size: 14px;
+    padding-left: 12px;
+    @include shadow-border;
+
+    &[type="submit"] {
+      @include bouton-submit($secundary-color, $secundary-color-darker);
     }
   }
 }

@@ -1,6 +1,7 @@
 # Fichiers de configuration spécifiques à l'environnement
 .stylelintrc.json
 .vscode
+.prettierignore
 
 # Dossier des dépendances Node.js
 node_modules/

@@ -1,0 +1,24 @@
+$animDur: 600ms;
+$animDelay: 100ms;
+
+//Apparition progressive des éléments
+.apparition {
+  animation: apparition $animDur cubic-bezier(0.42, 0, 0.58, 1) both;
+
+  @for $i from 1 through 20 {
+    &--#{$i} {
+      animation-delay: $animDelay * $i;
+    }
+  }
+}
+@keyframes apparition {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
