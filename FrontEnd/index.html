@@ -17,11 +17,20 @@
     />
     <meta name="description" content="" />
     <link rel="stylesheet" href="./css/style.css" />
-    <script src="./js/projets.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <script type="module" src="./js/projets.js" defer></script>
+    <script type="module" src="./js/admin.js" defer></script>
+    <script type="module" src="./js/modale.js" defer></script>
+    <!-- <script type="module" src="./js/apiServices.js" defer></script> -->
   </head>
   <body>
     <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+      <a href="#"
+        ><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a
+      >
       <nav>
         <ul>
           <li><a href="#portfolio">projets</a></li>
@@ -59,7 +68,7 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
+        <div id="conteneur-titre"><h2>Mes Projets</h2></div>
         <div class="boutons-filtre"></div>
 
         <div class="galerie"></div>
@@ -67,7 +76,7 @@
       <section id="contact" class="formulaire">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
-        <form action="#" method="post">
+        <form action="mailto:sophie.bluel@test.tld" method="post">
           <label for="name">Nom</label>
           <input type="text" name="name" id="name" />
           <label for="email">Email</label>
@@ -77,6 +86,51 @@
           <input type="submit" value="Envoyer" />
         </form>
       </section>
+
+      <aside
+        id="modale"
+        class="modale"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="false"
+        style="display: none"
+      >
+        <div class="modale-contenu modale-galerie js-modale-stop">
+          <button class="croix js-modale-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <h2>Galerie photo</h2>
+          <div class="galerie"></div>
+          <div class="ligne"></div>
+          <button class="ajout-photo">Ajouter une photo</button>
+        </div>
+
+        <div class="modale-contenu modale-ajout-photo js-modale-stop">
+          <button class="retour js-modale-back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button class="croix js-modale-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <h2>Ajout photo</h2>
+          <div class="conteneur-ajout-photo">
+            <i class="fa-regular fa-image"></i>
+            <input type="file" name="photo" id="photo" class="input-photo" />
+            <label for="photo" class="label-photo">+ Ajouter photo</label>
+            <small>jpg, png : 4mo max</small>
+          </div>
+          <form>
+            <label for="name">Titre</label>
+            <input type="text" name="name" id="name" />
+            <label for="categorie">Catégorie</label>
+            <select name="categorie" id="categorie">
+              <!-- <i class="fa-solid fa-chevron-down"></i> -->
+            </select>
+            <div class="ligne"></div>
+            <button type="submit" class="valider-photo">Valider</button>
+          </form>
+        </div>
+      </aside>
     </main>
 
     <footer>

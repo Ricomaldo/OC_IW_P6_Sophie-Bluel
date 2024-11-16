@@ -3,7 +3,7 @@
 
 /* Variables et Mixins */
 @import "variables/design";
-@import "mixins/shadow-border.scss";
+@import "mixins/input-style.scss";
 @import "mixins/bouton-submit.scss";
 
 /* Components */
@@ -16,13 +16,21 @@
 @import "pages/login";
 
 /* Animations */
-@import "animations/apparition.scss";
+@import "animations/anim-galerie.scss";
+@import "animations/anim-modale.scss";
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 
 body {
   max-width: 1140px;
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
+  background-color: $white;
+  color: $black;
 }
 
 section {
@@ -35,6 +43,11 @@ h2 {
   font-size: 30px;
   color: $secundary-color;
 }
+
+a {
+  text-decoration: none;
+}
+
 .formulaire {
   width: 50%;
   margin: auto;
@@ -55,13 +68,10 @@ h2 {
   }
 
   input {
-    height: 50px;
-    font-size: 14px;
-    padding-left: 12px;
-    @include shadow-border;
+    @include input-style;
 
     &[type="submit"] {
-      @include bouton-submit($secundary-color, $secundary-color-darker);
+      @include bouton-submit($secundary-color, $secundary-color-darker, 180px);
     }
   }
 }

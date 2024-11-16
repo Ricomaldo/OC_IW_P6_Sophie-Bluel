@@ -1,0 +1,175 @@
+.modale {
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  .modale-contenu {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    background-color: $white;
+    padding: 65px 105px 45px;
+    border-radius: 10px;
+    width: 630px;
+    height: 688px;
+    max-width: calc(100vh - 20px);
+    max-height: calc(100vh - 20px);
+    overflow: auto;
+    h2 {
+      font-family: $font-family_1;
+      color: $black;
+      font-weight: 400;
+      font-size: 26px;
+      margin-bottom: 46px;
+    }
+    .croix {
+      position: absolute;
+      right: 35px;
+      top: 35px;
+      font-size: 24px;
+      border: none;
+      color: $black;
+      background-color: transparent;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .retour {
+      position: absolute;
+      left: 35px;
+      top: 35px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: $black;
+      cursor: pointer;
+    }
+
+    .ligne {
+      width: 100%;
+      border: 1px solid #b3b3b3;
+      margin: 20px 0;
+    }
+    .ajout-photo,
+    .valider-photo {
+      @include bouton-submit($secundary-color, $secundary-color-darker, 237px);
+
+      margin-bottom: 0;
+    }
+  }
+  .modale-galerie {
+    display: flex;
+
+    .galerie {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 0px;
+      width: 420px;
+      height: 366px;
+      margin-bottom: 67px;
+
+      img {
+        width: 100%;
+      }
+      .projet-container {
+        position: relative;
+
+        i {
+          color: $white;
+          background-color: $black;
+          width: 20px; /* Taille ajustée pour une meilleure visibilité */
+          height: 20px;
+          font-size: 12px; /* Ajuste la taille de l'icône pour un meilleur rendu */
+          border-radius: 3px;
+          position: absolute;
+          top: 6px;
+          right: 6px; /* Place l'icône dans le coin supérieur droit */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .modale-ajout-photo {
+    display: none;
+    .conteneur-ajout-photo {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #e8f1f6;
+      border-radius: 3px;
+      padding: 22px;
+      width: 420px;
+      height: 169px;
+      text-align: center;
+      overflow: hidden;
+
+      i {
+        color: #cbd6dc;
+        font-size: 76px;
+        margin-bottom: 10px;
+      }
+      .input-photo {
+        display: none;
+      }
+
+      .label-photo {
+        color: #306685;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px 20px;
+        background-color: #cbd6dc;
+        border-radius: 50px;
+        cursor: pointer;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      small {
+        color: #444444;
+        font-size: 10px;
+      }
+
+      .apercu-image {
+        height: 193px;
+        width: 129px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+    }
+    form {
+      text-align: left;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      width: 420px;
+      padding: 0;
+      & select {
+        appearance: none;
+        padding-right: 20px;
+      }
+    }
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    input,
+    select {
+      @include input-style;
+      margin-bottom: 20px;
+    }
+  }
+}
