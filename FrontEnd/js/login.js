@@ -72,7 +72,7 @@ const validerChamps = (email, motDePasse) => {
 };
 
 const authentifierUtilisateur = (urlApiConnexion, identifiants) => {
-  return fetch(urlApiConnexion, {
+  fetch(urlApiConnexion, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(identifiants),

@@ -4,21 +4,25 @@
 
 export const afficherProjets = (selectedProjets) => {
   const galerie = document.querySelector(".galerie");
-  if (galerie && projets) {
-    galerie.innerHTML = "";
-    for (let i = 0; i < selectedProjets.length; i++) {
-      const projet = document.createElement("figure");
-      const projetImage = document.createElement("img");
-      const projetNom = document.createElement("figcaption");
-      projet.setAttribute("class", `apparition apparition--${i + 1}`); //animation
-      projetImage.src = projets[i].imageUrl;
-      projetImage.alt = projets[i].title;
-      projetNom.innerText = projets[i].title;
-      galerie.appendChild(projet);
-      projet.appendChild(projetImage);
-      projet.appendChild(projetNom);
-    }
-  }
+
+  if (!galerie || !selectedProjets || selectedProjets.length === 0) return;
+
+  galerie.innerHTML = "";
+
+  selectedProjets.forEach((projet, index) => {
+    const figure = document.createElement("figure");
+    const projetImage = document.createElement("img");
+    const projetNom = document.createElement("figcaption");
+
+    figure.setAttribute("class", `apparition apparition--${index + 1}`);
+    projetImage.src = projet.imageUrl;
+    projetImage.alt = projet.title;
+    projetNom.innerText = projet.title;
+
+    galerie.appendChild(figure);
+    figure.appendChild(projetImage);
+    figure.appendChild(projetNom);
+  });
 };
 
 // ********************************************

@@ -1,27 +1,40 @@
 import { afficherVignettes } from "./modale.js";
-import { afficherProjets } from "./projets.js";
+import { afficherProjets } from "./afficherProjets.js";
 
 let projetASupprimer = null;
-export const supprimerPojet = (projet) => {
+
+const mettreAJourProjets = () => {
+  const projetsMisesAJour = JSON.parse(localStorage.getItem("projets"));
+  return projetsMisesAJour;
+};
+
+let projetsMAJ = mettreAJourProjets();
+
+export const routineSupressionProjet = (projet) => {
   projetASupprimer = projet;
-  afficherPopup(projet);
+
+  afficherPopup(projetASupprimer);
   ajouteEcouteursFermeture();
 
   const boutonConfirmation = document.querySelector(
     ".pop-up__reponse-supprimer"
   );
+
   if (boutonConfirmation && projetASupprimer) {
     boutonConfirmation.addEventListener(
       "click",
       function confirmerSuppression() {
         supprimerProjet(projetASupprimer);
         supprimerProjetLocalStorage(projetASupprimer);
-        const projets = JSON.parse(localStorage.getItem("projets"));
 
         afficherVignettes();
-        afficherProjets(projets);
+
+        projetsMAJ = mettreAJourProjets();
+        console.log(projetsMAJ);
+        afficherProjets(projetsMAJ);
 
         fermerPopup();
+
         boutonConfirmation.removeEventListener("click", confirmerSuppression);
         projetASupprimer = null;
       }

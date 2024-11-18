@@ -2,7 +2,7 @@
 // * Importations et initialisations *
 // ********************************************
 
-import { supprimerPojet } from "./apiServices.js";
+import { routineSupressionProjet } from "./supprimerProjet.js";
 
 let modale = null;
 
@@ -114,7 +114,7 @@ export const afficherVignettes = () => {
     galerie.appendChild(imageConteneur);
     poubelleIcone.addEventListener("click", (e) => {
       e.stopPropagation();
-      supprimerPojet(projet);
+      routineSupressionProjet(projet);
     });
   });
 };
