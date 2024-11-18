@@ -58,7 +58,7 @@
     .ajout-photo,
     .valider-photo {
       @include bouton-submit($secundary-color, $secundary-color-darker, 237px);
-
+      text-align: center;
       margin-bottom: 0;
     }
   }

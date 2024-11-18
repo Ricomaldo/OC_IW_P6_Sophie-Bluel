@@ -1,0 +1,56 @@
+.pop-up {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  position: absolute;
+  width: 90%;
+  bottom: 30px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background-color: #f6f6f6;
+  font-family: $font-family_1;
+  &-visible {
+    display: flex;
+  }
+  h3 {
+    color: $black;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.3em;
+  }
+
+  &__reponse {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    font-size: 1em;
+
+    &-annuler {
+      color: $black;
+      background-color: #f6f6f6;
+      padding: 6px 10px;
+      border-radius: 5px;
+
+      &:hover {
+        font-weight: 700;
+        background-color: $white;
+        cursor: pointer;
+      }
+    }
+    &-supprimer {
+      color: $white;
+      background-color: $error-color;
+
+      padding: 6px 10px;
+      border-radius: 5px;
+      &:hover {
+        color: $error-color;
+        background-color: $white;
+        outline: solid 1px $error-color;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -21,9 +21,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script type="module" src="./js/projets.js" defer></script>
-    <script type="module" src="./js/admin.js" defer></script>
-    <script type="module" src="./js/modale.js" defer></script>
+    <script type="module" src="./js/projets.js"></script>
+    <script type="module" src="./js/admin.js"></script>
+    <script type="module" src="./js/modale.js"></script>
+    <script type="module" src="./js/apiServices.js"></script>
     <!-- <script type="module" src="./js/apiServices.js" defer></script> -->
   </head>
   <body>
@@ -78,11 +79,19 @@
         <p>Vous avez un projet ? Discutons-en !</p>
         <form action="mailto:sophie.bluel@test.tld" method="post">
           <label for="name">Nom</label>
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" id="name" required />
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" />
+          <input type="email" name="email" id="email" required />
           <label for="message">Message</label>
-          <textarea name="message" id="message" cols="30" rows="10"></textarea>
+          <textarea
+            name="message"
+            id="message"
+            cols="30"
+            rows="10"
+            minlength="10"
+            title="Le message doit contenir au moins 10 caractères."
+            required
+          ></textarea>
           <input type="submit" value="Envoyer" />
         </form>
       </section>
@@ -91,7 +100,6 @@
         id="modale"
         class="modale"
         aria-hidden="true"
-        role="dialog"
         aria-modal="false"
         style="display: none"
       >
@@ -103,6 +111,18 @@
           <div class="galerie"></div>
           <div class="ligne"></div>
           <button class="ajout-photo">Ajouter une photo</button>
+          <div class="pop-up">
+            <h3>Supprimer l'image ?</h3>
+            <p>
+              Cette action est définitive et supprimera l'image de tous les
+              emplacements où elle est utilisée, y compris les liens directs sur
+              les réseaux sociaux ou sites externes.
+            </p>
+            <div class="pop-up__reponse">
+              <p class="pop-up__reponse-annuler">Annuler</p>
+              <p class="pop-up__reponse-supprimer">Supprimer</p>
+            </div>
+          </div>
         </div>
 
         <div class="modale-contenu modale-ajout-photo js-modale-stop">
@@ -121,7 +141,7 @@
           </div>
           <form>
             <label for="name">Titre</label>
-            <input type="text" name="name" id="name" />
+            <input type="text" name="titre" id="titre" />
             <label for="categorie">Catégorie</label>
             <select name="categorie" id="categorie">
               <!-- <i class="fa-solid fa-chevron-down"></i> -->

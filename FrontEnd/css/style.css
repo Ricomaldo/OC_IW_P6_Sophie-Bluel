@@ -118,7 +118,7 @@ footer nav ul {
   position: relative;
   flex-direction: column;
   align-items: center;
-  background-color: black;
+  background-color: white;
   padding: 65px 105px 45px;
   border-radius: 10px;
   width: 630px;
@@ -129,7 +129,7 @@ footer nav ul {
 }
 .modale .modale-contenu h2 {
   font-family: "Work Sans";
-  color: white;
+  color: black;
   font-weight: 400;
   font-size: 26px;
   margin-bottom: 46px;
@@ -140,7 +140,7 @@ footer nav ul {
   top: 35px;
   font-size: 24px;
   border: none;
-  color: white;
+  color: black;
   background-color: transparent;
 }
 .modale .modale-contenu .croix:hover {
@@ -153,7 +153,7 @@ footer nav ul {
   background: none;
   border: none;
   font-size: 24px;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 .modale .modale-contenu .ligne {
@@ -165,7 +165,7 @@ footer nav ul {
 .modale .modale-contenu .valider-photo {
   font-family: "Syne";
   font-weight: 700;
-  color: black;
+  color: white;
   background-color: #1d6154;
   margin: 37px auto 32px;
   width: 237px;
@@ -174,6 +174,7 @@ footer nav ul {
   cursor: pointer;
   font-size: 14px;
   padding: 11px;
+  text-align: center;
   margin-bottom: 0;
 }
 .modale .modale-contenu .ajout-photo:hover,
@@ -199,8 +200,8 @@ footer nav ul {
   position: relative;
 }
 .modale .modale-galerie .galerie .projet-container i {
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   width: 20px; /* Taille ajustée pour une meilleure visibilité */
   height: 20px;
   font-size: 12px; /* Ajuste la taille de l'icône pour un meilleur rendu */
@@ -288,6 +289,59 @@ footer nav ul {
   margin-bottom: 20px;
 }
 
+.pop-up {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  position: absolute;
+  width: 90%;
+  bottom: 30px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background-color: #f6f6f6;
+  font-family: "Work Sans";
+}
+.pop-up-visible {
+  display: flex;
+}
+.pop-up h3 {
+  color: black;
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.3em;
+}
+.pop-up__reponse {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  font-size: 1em;
+}
+.pop-up__reponse-annuler {
+  color: black;
+  background-color: #f6f6f6;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.pop-up__reponse-annuler:hover {
+  font-weight: 700;
+  background-color: white;
+  cursor: pointer;
+}
+.pop-up__reponse-supprimer {
+  color: white;
+  background-color: #b20a37;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.pop-up__reponse-supprimer:hover {
+  color: #b20a37;
+  background-color: white;
+  outline: solid 1px #b20a37;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* Pages */
 #introduction {
   display: flex;
@@ -326,13 +380,13 @@ footer nav ul {
   font-size: 16px;
   padding: 12px 20px;
   color: #1d6154;
-  background-color: black;
+  background-color: white;
   border: solid 1px #1d6154;
   border-radius: 60px;
 }
 #portfolio .boutons-filtre button:hover {
   cursor: pointer;
-  color: black;
+  color: white;
   background-color: #1d6154;
 }
 #portfolio .galerie {
@@ -357,7 +411,7 @@ footer nav ul {
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
-  color: white;
+  color: black;
   width: 84px;
   height: 18px;
   margin-left: 350px;
@@ -422,7 +476,6 @@ footer nav ul {
 #erreur-connexion p {
   padding: 12px 20px;
 }
-
 
 /* Animations */
 .apparition {
@@ -555,8 +608,8 @@ body {
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 section {
@@ -601,7 +654,7 @@ a {
 .formulaire input[type=submit] {
   font-family: "Syne";
   font-weight: 700;
-  color: black;
+  color: white;
   background-color: #1d6154;
   margin: 37px auto 32px;
   width: 180px;

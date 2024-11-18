@@ -39,6 +39,25 @@ const MESSAGES_ERREUR = {
   emailInvalide: "Erreur dans l'identifiant ou le mot de passe",
 };
 
+const formulaireConnexion = document.querySelector("#connexion form");
+if (formulaireConnexion) {
+  formulaireConnexion.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const adresseEmail = document.getElementById("email").value;
+    const motDePasse = document.getElementById("password").value;
+
+    const validation = validerChamps(adresseEmail, motDePasse);
+    if (!validation.valide) {
+      afficherMessageErreur(MESSAGES_ERREUR[validation.erreur]);
+      return;
+    }
+
+    const urlApiConnexion = "http://localhost:5678/api/users/login";
+    const identifiants = { email: adresseEmail, password: motDePasse };
+    authentifierUtilisateur(urlApiConnexion, identifiants);
+  });
+}
+
 const validerChamps = (email, motDePasse) => {
   if (!email || !motDePasse) {
     return { valide: false, erreur: "champsVides" };
@@ -50,16 +69,6 @@ const validerChamps = (email, motDePasse) => {
   }
 
   return { valide: true };
-};
-
-const afficherMessageErreur = (messageErreur) => {
-  const messageConteneur = document.querySelector("#erreur-connexion");
-  messageConteneur.innerHTML = "";
-
-  const message = document.createElement("p");
-  messageConteneur.appendChild(message);
-
-  message.innerText = messageErreur;
 };
 
 const authentifierUtilisateur = (urlApiConnexion, identifiants) => {
@@ -77,6 +86,9 @@ const authentifierUtilisateur = (urlApiConnexion, identifiants) => {
     .then((jetonAuthentification) => {
       sessionStorage.setItem("token", jetonAuthentification.token);
       window.location.href = "../index.html";
+      console.log(
+        `✅ Authentification réussie pour l'utilisateur : ${username}.`
+      );
     })
     .catch((error) => {
       console.error("Erreur :", error);
@@ -86,24 +98,15 @@ const authentifierUtilisateur = (urlApiConnexion, identifiants) => {
     });
 };
 
-const formulaireConnexion = document.querySelector("#connexion form");
-if (formulaireConnexion) {
-  formulaireConnexion.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const adresseEmail = document.getElementById("email").value;
-    const motDePasse = document.getElementById("password").value;
+const afficherMessageErreur = (messageErreur) => {
+  const messageConteneur = document.querySelector("#erreur-connexion");
+  messageConteneur.innerHTML = "";
 
-    const validation = validerChamps(adresseEmail, motDePasse);
-    if (!validation.valide) {
-      afficherMessageErreur(MESSAGES_ERREUR[validation.erreur]);
-      return;
-    }
+  const message = document.createElement("p");
+  messageConteneur.appendChild(message);
 
-    const urlApiConnexion = "http://localhost:5678/api/users/login";
-    const identifiants = { email: adresseEmail, password: motDePasse };
-    authentifierUtilisateur(urlApiConnexion, identifiants);
-  });
-}
+  message.innerText = messageErreur;
+};
 
 if (window.location.pathname.endsWith("login.html")) {
   const oubliBouton = document.getElementById("oubli-mot-de-passe");
@@ -112,5 +115,14 @@ if (window.location.pathname.endsWith("login.html")) {
     alert(
       "Fonction non prise en charge par la version actuelle de l'API (en cours de developpement)"
     );
+  });
+}
+
+// ecouteur du focus du champs du mot de passe pour effacer le msg
+const passwordInput = document.querySelector("#password");
+const erreurConnexion = document.querySelector("#erreur-connexion");
+if (passwordInput && erreurConnexion) {
+  passwordInput.addEventListener("focus", () => {
+    erreurConnexion.innerHTML = "";
   });
 }
