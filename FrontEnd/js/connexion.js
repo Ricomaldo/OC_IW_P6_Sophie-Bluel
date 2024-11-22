@@ -1,8 +1,8 @@
 // ********************************************
-// * Importations et initialisations *
+// * Importations  *
 // ********************************************
 
-import { ouvrirModaleGalerie } from "./modale.js";
+import { ouvrirModaleGalerie } from "./gestionModale.js";
 
 // ********************************************
 // * Configuration du bouton admnin * création, affichage, activation (et suppression de la barre de boutons de catégorie)
@@ -85,6 +85,10 @@ const authentifierUtilisateur = (urlApiConnexion, identifiants) => {
     })
     .then((jetonAuthentification) => {
       sessionStorage.setItem("token", jetonAuthentification.token);
+      const messageConteneur = document.querySelector("#erreur-connexion");
+      if (messageConteneur) {
+        messageConteneur.innerHTML = "";
+      }
       window.location.href = "../index.html";
       console.log(
         `✅ Authentification réussie pour l'utilisateur : ${username}.`

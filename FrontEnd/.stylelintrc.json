@@ -1,0 +1,21 @@
+{{
+    "extends": "stylelint-config-standard-scss",
+    "plugins": ["stylelint-order"],
+    "rules": {
+      "order/properties-order": [
+        "position",
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "display",
+        "width",
+        "height",
+        "margin",
+        "padding",
+        "background",
+        "color",
+        "font-size"
+      ]
+    }
+  }

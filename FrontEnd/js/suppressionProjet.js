@@ -1,47 +1,17 @@
-import { afficherVignettes } from "./modale.js";
-import { afficherProjets } from "./afficherProjets.js";
+// ********************************************
+// * Importations et initialisations *
+// ********************************************
+
+import { afficherVignettes } from "./gestionModale.js";
+import { afficherProjets, mettreAJourProjets } from "./affichageProjets.js";
 
 let projetASupprimer = null;
 
-const mettreAJourProjets = () => {
-  const projetsMisesAJour = JSON.parse(localStorage.getItem("projets"));
-  return projetsMisesAJour;
-};
-
 let projetsMAJ = mettreAJourProjets();
 
-export const routineSupressionProjet = (projet) => {
-  projetASupprimer = projet;
-
-  afficherPopup(projetASupprimer);
-  ajouteEcouteursFermeture();
-
-  const boutonConfirmation = document.querySelector(
-    ".pop-up__reponse-supprimer"
-  );
-
-  if (boutonConfirmation && projetASupprimer) {
-    boutonConfirmation.addEventListener(
-      "click",
-      function confirmerSuppression() {
-        supprimerProjet(projetASupprimer);
-        supprimerProjetLocalStorage(projetASupprimer);
-
-        afficherVignettes();
-
-        projetsMAJ = mettreAJourProjets();
-        console.log(projetsMAJ);
-        afficherProjets(projetsMAJ);
-
-        fermerPopup();
-
-        boutonConfirmation.removeEventListener("click", confirmerSuppression);
-        projetASupprimer = null;
-      }
-    );
-  }
-};
-
+// ********************************************
+// * Gestion Pop-Up *
+// ********************************************
 const afficherPopup = (projet) => {
   const popUp = document.querySelector(".pop-up");
   popUp.style.display = "flex";
@@ -50,26 +20,9 @@ const afficherPopup = (projet) => {
   const projetTitre = popUp.querySelector("h3");
   projetTitre.textContent = "";
   projetTitre.textContent = `Supprimer ${projet.title} ?`;
-};
-
-const ajouteEcouteursFermeture = () => {
-  const modale = document.querySelector(".modale");
-  modale.addEventListener("click", (e) => {
-    if (e.target === modale) {
-      fermerPopup();
-    }
-  });
-
-  document.querySelectorAll(".js-close").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      e.stopPropagation();
-      fermerPopup();
-    });
-  });
 
   const boutonAnnuler = document.querySelector(".pop-up__reponse-annuler");
   boutonAnnuler.addEventListener("click", (e) => {
-    e.stopPropagation();
     fermerPopup();
   });
 };
@@ -85,14 +38,12 @@ const fermerPopup = () => {
     element.removeEventListener("click", fermerPopup);
   });
 
-  const boutonAnnuler = document.querySelector(".pop-up__reponse-annuler");
-  boutonAnnuler.removeEventListener("click", (e) => {
-    fermerPopup();
-  });
-
   popUp.classList.remove("pop-up-visible");
 };
 
+// ********************************************
+// * Fonctions de suppression *
+// ********************************************
 const supprimerProjet = (projet, urlApiConnexion) => {
   const valideToken = sessionStorage.getItem("token");
 
@@ -129,4 +80,38 @@ const supprimerProjetLocalStorage = (projet) => {
   localStorage.setItem("projets", JSON.stringify(projetsMisAJour));
 
   console.log(`Projet avec l'id ${projet.id} supprimé.`);
+};
+
+// ********************************************
+// * Fonction principale *
+// ********************************************
+export const routineSupressionProjet = (projet) => {
+  projetASupprimer = projet;
+
+  afficherPopup(projetASupprimer);
+
+  const boutonConfirmation = document.querySelector(
+    ".pop-up__reponse-supprimer"
+  );
+
+  if (boutonConfirmation && projetASupprimer) {
+    boutonConfirmation.addEventListener(
+      "click",
+      function confirmerSuppression() {
+        supprimerProjet(projetASupprimer);
+        supprimerProjetLocalStorage(projetASupprimer);
+
+        afficherVignettes();
+
+        projetsMAJ = mettreAJourProjets();
+        console.log(projetsMAJ);
+        afficherProjets(projetsMAJ);
+
+        fermerPopup();
+
+        boutonConfirmation.removeEventListener("click", confirmerSuppression);
+        projetASupprimer = null;
+      }
+    );
+  }
 };

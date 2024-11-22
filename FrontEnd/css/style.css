@@ -161,8 +161,8 @@ footer nav ul {
   border: 1px solid #b3b3b3;
   margin: 20px 0;
 }
-.modale .modale-contenu .ajout-photo,
-.modale .modale-contenu .valider-photo {
+.modale .modale-contenu .bouton-ajout-photo,
+.modale .modale-contenu .bouton-valider-photo {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -177,8 +177,8 @@ footer nav ul {
   text-align: center;
   margin-bottom: 0;
 }
-.modale .modale-contenu .ajout-photo:hover,
-.modale .modale-contenu .valider-photo:hover {
+.modale .modale-contenu .bouton-ajout-photo:hover,
+.modale .modale-contenu .bouton-valider-photo:hover {
   background-color: #0e2f28;
 }
 .modale .modale-galerie {
@@ -220,23 +220,26 @@ footer nav ul {
   display: none;
 }
 .modale .modale-ajout-photo .conteneur-ajout-photo {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #e8f1f6;
   border-radius: 3px;
-  padding: 22px;
   width: 420px;
   height: 169px;
   text-align: center;
   overflow: hidden;
 }
+.modale .modale-ajout-photo .conteneur-ajout-photo .ajout-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .modale .modale-ajout-photo .conteneur-ajout-photo i {
   color: #cbd6dc;
   font-size: 76px;
-  margin-bottom: 10px;
 }
 .modale .modale-ajout-photo .conteneur-ajout-photo .input-photo {
   display: none;
@@ -259,7 +262,6 @@ footer nav ul {
 .modale .modale-ajout-photo .conteneur-ajout-photo .apercu-image {
   height: 193px;
   width: 129px;
-  border-radius: 5px;
   object-fit: cover;
 }
 .modale .modale-ajout-photo form {
@@ -269,6 +271,7 @@ footer nav ul {
   flex-direction: column;
   width: 420px;
   padding: 0;
+  position: relative;
 }
 .modale .modale-ajout-photo form select {
   appearance: none;
@@ -283,10 +286,19 @@ footer nav ul {
 .modale .modale-ajout-photo select {
   height: 50px;
   font-size: 14px;
-  padding-left: 12px;
+  padding-left: 18px;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   margin-bottom: 20px;
+  position: relative;
+  background-image: none;
+}
+.modale .modale-ajout-photo .fa-chevron-down {
+  position: absolute;
+  right: 18px;
+  top: 140px;
+  pointer-events: none;
+  font-size: 11px;
 }
 
 .pop-up {
@@ -647,7 +659,7 @@ a {
 .formulaire input {
   height: 50px;
   font-size: 14px;
-  padding-left: 12px;
+  padding-left: 18px;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }

@@ -21,11 +21,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <script type="module" src="./js/afficherProjets.js"></script>
-    <script type="module" src="./js/login.js"></script>
-    <script type="module" src="./js/modale.js"></script>
-    <script type="module" src="./js/supprimerProjet.js"></script>
-    <!-- <script type="module" src="./js/apiServices.js" defer></script> -->
+    <script type="module" src="./js/affichageProjets.js"></script>
+    <script type="module" src="./js/connexion.js"></script>
+    <script type="module" src="./js/gestionModale.js"></script>
+    <script type="module" src="./js/suppressionProjet.js"></script>
+    <script type="module" src="./js/ajoutProjet.js" defer></script>
   </head>
   <body>
     <header>
@@ -110,7 +110,7 @@
           <h2>Galerie photo</h2>
           <div class="galerie"></div>
           <div class="ligne"></div>
-          <button class="ajout-photo">Ajouter une photo</button>
+          <button class="bouton-ajout-photo">Ajouter une photo</button>
           <div class="pop-up">
             <h3>Supprimer l'image ?</h3>
             <p>
@@ -134,20 +134,27 @@
           </button>
           <h2>Ajout photo</h2>
           <div class="conteneur-ajout-photo">
-            <i class="fa-regular fa-image"></i>
-            <input type="file" name="photo" id="photo" class="input-photo" />
-            <label for="photo" class="label-photo">+ Ajouter photo</label>
-            <small>jpg, png : 4mo max</small>
+            <div class="ajout-photo">
+              <i class="fa-regular fa-image"></i>
+              <input
+                type="file"
+                name="photo"
+                id="photo"
+                class="input-photo"
+                accept="image/jpeg,image/png"
+              />
+              <label for="photo" class="label-photo">+ Ajouter photo</label>
+              <small>jpg, png : 4mo max</small>
+            </div>
           </div>
           <form>
             <label for="name">Titre</label>
             <input type="text" name="titre" id="titre" />
             <label for="categorie">Catégorie</label>
-            <select name="categorie" id="categorie">
-              <!-- <i class="fa-solid fa-chevron-down"></i> -->
-            </select>
+            <select name="categorie" id="categorie"></select
+            ><i class="fa-solid fa-chevron-down"></i>
             <div class="ligne"></div>
-            <button type="submit" class="valider-photo">Valider</button>
+            <button type="submit" class="bouton-valider-photo">Valider</button>
           </form>
         </div>
       </aside>

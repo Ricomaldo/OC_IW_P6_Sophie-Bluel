@@ -2,7 +2,8 @@
 // * Importations et initialisations *
 // ********************************************
 
-import { routineSupressionProjet } from "./supprimerProjet.js";
+import { routineSupressionProjet } from "./suppressionProjet.js";
+import { remplirSelectionCategories, afficherAperçu } from "./ajoutProjet.js";
 
 let modale = null;
 
@@ -38,9 +39,11 @@ const ouvrirModaleAjout = () => {
   const modaleAjout = document.querySelector(".modale-ajout-photo");
 
   modaleAjout.style.display = "flex";
+  remplirSelectionCategories();
+  afficherAperçu();
 };
 
-const fermerModale = (e) => {
+const fermerModale = () => {
   if (modale === null) return;
 
   modale.removeAttribute("aria-modal");
@@ -53,6 +56,21 @@ const fermerModale = (e) => {
       modale = null;
     }
   }, 200);
+
+  //reinitialiser la modale
+  fermerModaleAjout();
+  //supprimer popup
+  const popUp = document.querySelector(".pop-up");
+  popUp.style.display = "none";
+  popUp.classList.remove("pop-up-visible");
+
+  //supprimer l'aperçu
+  const apercuPhoto = document.querySelector(".apercu-image");
+  const texteAjoutPhoto = document.querySelector(".ajout-photo");
+  if (apercuPhoto) {
+    texteAjoutPhoto.style.display = "flex";
+    apercuPhoto.remove();
+  }
 
   // Retirer les écouteurs
   modale.removeEventListener("click", fermerModale);
@@ -77,7 +95,7 @@ const activerEcouteursModale = () => {
     });
   });
 
-  const boutonAjoutPhoto = modale.querySelector(".ajout-photo");
+  const boutonAjoutPhoto = modale.querySelector(".bouton-ajout-photo");
   boutonAjoutPhoto.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -119,6 +137,23 @@ export const afficherVignettes = () => {
   });
 };
 
+export const fermerModaleAjout = () => {
+  // Afficher la galerie et masquer la section d'ajout
+  const galerie = document.querySelector(".modale-galerie");
+  const ajoutPhoto = document.querySelector(".modale-ajout-photo");
+  ajoutPhoto.style.display = "none";
+  galerie.style.animation = "none";
+  galerie.style.display = "flex";
+
+  //supprimer l'aperçu
+  const apercuPhoto = document.querySelector(".apercu-image");
+  const texteAjoutPhoto = document.querySelector(".ajout-photo");
+  if (apercuPhoto) {
+    texteAjoutPhoto.style.display = "flex";
+    apercuPhoto.remove();
+  }
+};
+
 // ********************************************
 // * Gestion des événements *
 // ********************************************
@@ -129,11 +164,6 @@ if (boutonRetour) {
     e.preventDefault();
     e.stopPropagation();
 
-    // Afficher la galerie et masquer la section d'ajout
-    const galerie = document.querySelector(".modale-galerie");
-    const ajoutPhoto = document.querySelector(".modale-ajout-photo");
-    ajoutPhoto.style.display = "none";
-    galerie.style.animation = "none";
-    galerie.style.display = "flex";
+    fermerModaleAjout();
   });
 }

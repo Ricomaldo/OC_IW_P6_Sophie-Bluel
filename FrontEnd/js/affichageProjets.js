@@ -82,7 +82,7 @@ if (!projets) {
     .then((data) => {
       localStorage.setItem("projets", JSON.stringify(data));
       projets = data;
-      console.log("Nombre de projets chargés depuis l'API':", projets.length);
+      console.log("Nombre de projets chargés depuis l'API:", projets.length);
       afficherProjets(projets);
       genererBoutonsFiltres();
     })
@@ -98,3 +98,8 @@ if (!projets) {
   afficherProjets(projets);
   genererBoutonsFiltres();
 }
+
+export const mettreAJourProjets = () => {
+  const projetsMisesAJour = JSON.parse(localStorage.getItem("projets"));
+  return projetsMisesAJour;
+};

@@ -55,8 +55,8 @@
       border: 1px solid #b3b3b3;
       margin: 20px 0;
     }
-    .ajout-photo,
-    .valider-photo {
+    .bouton-ajout-photo,
+    .bouton-valider-photo {
       @include bouton-submit($secundary-color, $secundary-color-darker, 237px);
       text-align: center;
       margin-bottom: 0;
@@ -103,23 +103,26 @@
   .modale-ajout-photo {
     display: none;
     .conteneur-ajout-photo {
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background-color: #e8f1f6;
       border-radius: 3px;
-      padding: 22px;
       width: 420px;
       height: 169px;
       text-align: center;
       overflow: hidden;
+      .ajout-photo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
       i {
         color: #cbd6dc;
         font-size: 76px;
-        margin-bottom: 10px;
       }
       .input-photo {
         display: none;
@@ -145,7 +148,6 @@
       .apercu-image {
         height: 193px;
         width: 129px;
-        border-radius: 5px;
         object-fit: cover;
       }
     }
@@ -160,8 +162,10 @@
         appearance: none;
         padding-right: 20px;
       }
+      position: relative;
     }
     label {
+      // display: block;
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 12px;
@@ -170,6 +174,19 @@
     select {
       @include input-style;
       margin-bottom: 20px;
+      position: relative;
+      background-image: none;
+      // padding-right: 2.5rem;
+      // padding: 0.75rem 2rem 0.75rem 1rem;
+    }
+    .fa-chevron-down {
+      position: absolute;
+      right: 18px; // Ajuste selon tes besoins
+      top: 140px;
+      // transform: translateY(-50%);
+      pointer-events: none; // Évite les clics sur l'icône
+      font-size: 11px;
+      // color: #333;
     }
   }
 }
