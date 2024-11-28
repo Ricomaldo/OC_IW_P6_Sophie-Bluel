@@ -1,14 +1,14 @@
 #introduction {
   display: flex;
   align-items: center;
+  gap: 70px;
   figure {
     flex: 1;
   }
 
   img {
     display: block;
-    margin: auto;
-    width: 80%;
+    width: 100%;
   }
 
   article {
@@ -50,7 +50,7 @@
       }
     }
   }
-  .galerie {
+  .galerie-portfolio {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -59,12 +59,11 @@
 
     img {
       width: 100%;
-      
     }
   }
 }
 
-#conteneur-titre {
+#conteneur-titre-portfolio {
   display: flex;
   justify-content: center;
 }

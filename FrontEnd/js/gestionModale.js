@@ -2,84 +2,90 @@
 // * Importations et initialisations *
 // ********************************************
 
-import { routineSupressionProjet } from "./suppressionProjet.js";
-import { remplirSelectionCategories, afficherAperçu } from "./ajoutProjet.js";
+import { routineSuppressionProjet } from "./suppressionProjet.js";
+import {
+  remplirMenuCategories,
+  afficherAperçu,
+  verifierChamps,
+  gererChargementImage,
+} from "./ajoutProjet.js";
 
-let modale = null;
+// Référence à la modale active
+let modaleActive = null;
 
 // ********************************************
 // * Fonctions de gestion de la modale *
 // ********************************************
 
-export const ouvrirModaleGalerie = (e) => {
+export const ouvrirGalerieModale = (e) => {
   e.preventDefault();
-  modale = document.getElementById("modale");
+  modaleActive = document.getElementById("modale");
 
-  modale.style.display = "flex";
-  modale.removeAttribute("aria-hidden");
-  modale.setAttribute("aria-modal", "true");
+  // Affiche la modale et met à jour ses attributs d'accessibilité
+  modaleActive.style.display = "flex";
+  modaleActive.removeAttribute("aria-hidden");
+  modaleActive.setAttribute("aria-modal", "true");
 
-  afficherVignettes();
+  afficherProjetsModale(); // Met à jour la galerie dans la modale
+
+  // Masque les pop-ups et réinitialise leurs états
   const popUp = document.querySelector(".pop-up");
   popUp.style.display = "none";
   popUp.classList.remove("pop-up-visible");
 
-  modale.addEventListener("click", (e) => {
-    if (e.target === modale) {
+  // Ajoute un écouteur pour fermer la modale lorsqu'on clique à l'extérieur
+  modaleActive.addEventListener("click", (e) => {
+    if (e.target === modaleActive) {
       fermerModale();
     }
   });
 
-  activerEcouteursModale();
+  activerEcouteursModale(); // Active les écouteurs pour la modale
 };
 
-const ouvrirModaleAjout = () => {
-  const modaleGalerie = document.querySelector(".modale-galerie");
-  modaleGalerie.style.display = "none";
-  const modaleAjout = document.querySelector(".modale-ajout-photo");
+const ouvrirModaleAjouterPhoto = () => {
+  // Masque la galerie et affiche la modale d'ajout de photo
+  const galerieModale = document.querySelector(".modale-galerie");
+  galerieModale.style.display = "none";
 
-  modaleAjout.style.display = "flex";
-  remplirSelectionCategories();
+  const modaleAjouterPhoto = document.querySelector(".modale-ajout-photo");
+  modaleAjouterPhoto.style.display = "flex";
+
+  // Prépare le formulaire et son aperçu
+  remplirMenuCategories();
   afficherAperçu();
+  verifierChamps();
 };
 
 const fermerModale = () => {
-  if (modale === null) return;
+  if (modaleActive === null) return;
 
-  modale.removeAttribute("aria-modal");
-  modale.setAttribute("aria-hidden", "true");
+  // Met à jour les attributs d'accessibilité de la modale
+  modaleActive.removeAttribute("aria-modal");
+  modaleActive.setAttribute("aria-hidden", "true");
 
-  // Ferme la modale avec un délai
+  // Ferme la modale après un délai
   window.setTimeout(() => {
-    if (modale) {
-      modale.style.display = "none";
-      modale = null;
+    if (modaleActive) {
+      modaleActive.style.display = "none";
+      modaleActive = null;
     }
   }, 200);
 
-  //reinitialiser la modale
-  fermerModaleAjout();
-  //supprimer popup
+  // Réinitialise la modale et ses composants
+  fermerModaleAjouterPhoto();
   const popUp = document.querySelector(".pop-up");
   popUp.style.display = "none";
   popUp.classList.remove("pop-up-visible");
+  reinitialiserFormulaireAjout();
 
-  //supprimer l'aperçu
-  const apercuPhoto = document.querySelector(".apercu-image");
-  const texteAjoutPhoto = document.querySelector(".ajout-photo");
-  if (apercuPhoto) {
-    texteAjoutPhoto.style.display = "flex";
-    apercuPhoto.remove();
-  }
-
-  // Retirer les écouteurs
-  modale.removeEventListener("click", fermerModale);
-
-  modale.querySelectorAll(".js-modale-close").forEach((btn) => {
+  // Retire tous les écouteurs de la modale
+  modaleActive.removeEventListener("click", fermerModale);
+  modaleActive.querySelectorAll(".js-modale-close").forEach((btn) => {
     btn.removeEventListener("click", fermerModale);
   });
 
-  modale.querySelectorAll(".js-modale-stop").forEach((element) => {
+  modaleActive.querySelectorAll(".js-modale-stop").forEach((element) => {
     element.removeEventListener("click", (e) => {
       e.stopPropagation();
     });
@@ -87,22 +93,25 @@ const fermerModale = () => {
 };
 
 const activerEcouteursModale = () => {
-  const boutonFermer = modale.querySelectorAll(".js-modale-close");
-  boutonFermer.forEach((btn) => {
+  // Ajoute les écouteurs pour fermer la modale
+  const boutonsFermer = modaleActive.querySelectorAll(".js-modale-close");
+  boutonsFermer.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       fermerModale();
     });
   });
 
-  const boutonAjoutPhoto = modale.querySelector(".bouton-ajout-photo");
-  boutonAjoutPhoto.addEventListener("click", (e) => {
+  // Ajoute un écouteur au bouton pour ouvrir la modale d'ajout de photo
+  const boutonAjouterPhoto = modaleActive.querySelector(".bouton-ajout-photo");
+  boutonAjouterPhoto.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    ouvrirModaleAjout();
+    ouvrirModaleAjouterPhoto();
   });
 
-  const stopClick = modale.querySelectorAll(".js-modale-stop");
+  // Empêche la propagation des clics sur certains éléments
+  const stopClick = modaleActive.querySelectorAll(".js-modale-stop");
   stopClick.forEach((element) => {
     element.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -110,48 +119,46 @@ const activerEcouteursModale = () => {
   });
 };
 
-export const afficherVignettes = () => {
+export const afficherProjetsModale = () => {
   const projets = JSON.parse(localStorage.getItem("projets"));
-  const galerie = document.querySelector(".modale .galerie");
-  galerie.innerHTML = "";
+  const galerieModale = document.querySelector(".modale .galerie-modale");
+  galerieModale.innerHTML = ""; // Réinitialise le contenu de la galerie
 
+  // Crée des vignettes pour chaque projet
   projets.forEach((projet) => {
-    const imageConteneur = document.createElement("div");
-    imageConteneur.classList.add("projet-container");
+    const conteneurImage = document.createElement("div");
+    conteneurImage.classList.add("projet-container");
 
     const projetImage = document.createElement("img");
+    projetImage.src = projet.imageUrl; // Définit l'image du projet
+    projetImage.alt = projet.title; // Ajoute un texte alternatif
+    conteneurImage.appendChild(projetImage);
 
-    projetImage.src = projet.imageUrl;
-    projetImage.alt = projet.title;
-    imageConteneur.appendChild(projetImage);
+    // Ajoute une icône de suppression au projet
+    const iconeSupprimer = document.createElement("i");
+    iconeSupprimer.classList.add("fa-solid", "fa-trash-can");
+    conteneurImage.appendChild(iconeSupprimer);
 
-    const poubelleIcone = document.createElement("i");
-    poubelleIcone.classList.add("fa-solid", "fa-trash-can");
-    imageConteneur.appendChild(poubelleIcone);
+    galerieModale.appendChild(conteneurImage);
 
-    galerie.appendChild(imageConteneur);
-    poubelleIcone.addEventListener("click", (e) => {
+    // Ajoute un écouteur pour gérer la suppression du projet
+    iconeSupprimer.addEventListener("click", (e) => {
       e.stopPropagation();
-      routineSupressionProjet(projet);
+      routineSuppressionProjet(projet);
     });
   });
 };
 
-export const fermerModaleAjout = () => {
-  // Afficher la galerie et masquer la section d'ajout
-  const galerie = document.querySelector(".modale-galerie");
-  const ajoutPhoto = document.querySelector(".modale-ajout-photo");
-  ajoutPhoto.style.display = "none";
-  galerie.style.animation = "none";
-  galerie.style.display = "flex";
+export const fermerModaleAjouterPhoto = () => {
+  const galerieModale = document.querySelector(".modale-galerie");
+  const modaleAjouterPhoto = document.querySelector(".modale-ajout-photo");
 
-  //supprimer l'aperçu
-  const apercuPhoto = document.querySelector(".apercu-image");
-  const texteAjoutPhoto = document.querySelector(".ajout-photo");
-  if (apercuPhoto) {
-    texteAjoutPhoto.style.display = "flex";
-    apercuPhoto.remove();
-  }
+  // Réinitialise l'état des modales
+  modaleAjouterPhoto.style.display = "none";
+  galerieModale.style.animation = "none";
+  galerieModale.style.display = "flex";
+
+  reinitialiserFormulaireAjout(); // Réinitialise le formulaire
 };
 
 // ********************************************
@@ -164,6 +171,30 @@ if (boutonRetour) {
     e.preventDefault();
     e.stopPropagation();
 
-    fermerModaleAjout();
+    // Réinitialise le formulaire et retourne à la galerie
+    reinitialiserFormulaireAjout();
+    fermerModaleAjouterPhoto();
   });
 }
+
+const reinitialiserFormulaireAjout = () => {
+  // Réinitialise les champs du formulaire d'ajout de projet
+  const inputImage = document.getElementById("photo");
+  const titreProjet = document.getElementById("titre");
+  const categorieProjet = document.getElementById("categorie");
+
+  inputImage.value = "";
+  titreProjet.value = "";
+  categorieProjet.value = "";
+
+  // Réinitialise l'aperçu de l'image
+  const conteneurApercu = document.querySelector(".conteneur-apercu");
+  conteneurApercu.innerHTML = "";
+  conteneurApercu.style.display = "none";
+
+  // Réaffiche le texte d'indication
+  const messageAjoutPhoto = document.querySelector(".ajout-photo");
+  messageAjoutPhoto.style.display = "flex";
+
+  inputImage.removeEventListener("change", gererChargementImage); // Supprime l'écouteur
+};

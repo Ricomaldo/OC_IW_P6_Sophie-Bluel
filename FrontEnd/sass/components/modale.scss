@@ -60,12 +60,18 @@
       @include bouton-submit($secundary-color, $secundary-color-darker, 237px);
       text-align: center;
       margin-bottom: 0;
+      &[disabled] {
+        background-color: #a7a7a7;
+        cursor: not-allowed;
+        color: $white;
+        border: none;
+      }
     }
   }
   .modale-galerie {
     display: flex;
 
-    .galerie {
+    .galerie-modale {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-column-gap: 10px;

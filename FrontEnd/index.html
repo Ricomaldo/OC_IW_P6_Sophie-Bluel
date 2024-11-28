@@ -25,25 +25,44 @@
     <script type="module" src="./js/connexion.js"></script>
     <script type="module" src="./js/gestionModale.js"></script>
     <script type="module" src="./js/suppressionProjet.js"></script>
-    <script type="module" src="./js/ajoutProjet.js" defer></script>
+    <script type="module" src="./js/ajoutProjet.js"></script>
+    <script type="module" src="./js/redimensionnement.js"></script>
   </head>
   <body>
+    <!-- Début du header -->
     <header>
-      <a href="#"
-        ><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a
-      >
-      <nav>
-        <ul>
-          <li><a href="#portfolio">projets</a></li>
-          <li><a href="#contact">contact</a></li>
-          <li><a href="./pages/login.html">login</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
+      <div class="barre-mode-edition">
+        <i class="fa-regular fa-pen-to-square"></i>
+        <p>Mode édition</p>
+      </div>
+      <div class="contenu">
+        <a href="#">
+          <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#portfolio">projets</a></li>
+            <li><a href="#contact">contact</a></li>
+            <li><a href="./pages/login.html" id="lien-log">login</a></li>
+            <li>
+              <a href="#">
+                <img
+                  src="./assets/icons/instagram.png"
+                  alt="Icône menant vers le profil Instagram de Sophie Bluel"
+                />
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
+    <!-- Fin du header -->
+
     <main>
+      <!-- Début de la section Introduction -->
       <section id="introduction">
         <figure>
+          <!-- Portrait de Sophie Bluel -->
           <img
             src="./assets/images/sophie-bluel.png"
             alt="Portrait de Sophie Bluel"
@@ -51,6 +70,7 @@
         </figure>
         <article>
           <h2>Designer d'espace</h2>
+          <!-- Description de l'activité -->
           <p>
             Je raconte votre histoire, je valorise vos idées. Je vous accompagne
             de la conception à la livraison finale du chantier.
@@ -68,15 +88,25 @@
           </p>
         </article>
       </section>
-      <section id="portfolio">
-        <div id="conteneur-titre"><h2>Mes Projets</h2></div>
-        <div class="boutons-filtre"></div>
+      <!-- Fin de la section Introduction -->
 
-        <div class="galerie"></div>
+      <!-- Début de la section Portfolio -->
+      <section id="portfolio">
+        <div id="conteneur-titre-portfolio">
+          <h2>Mes Projets</h2>
+        </div>
+        <!-- Boutons de filtre pour les projets -->
+        <div class="boutons-filtre"></div>
+        <!-- Galerie des projets -->
+        <div class="galerie-portfolio"></div>
       </section>
+      <!-- Fin de la section Portfolio -->
+
+      <!-- Début de la section Contact -->
       <section id="contact" class="formulaire">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
+        <!-- Formulaire de contact -->
         <form action="mailto:sophie.bluel@test.tld" method="post">
           <label for="name">Nom</label>
           <input type="text" name="name" id="name" required />
@@ -95,7 +125,9 @@
           <input type="submit" value="Envoyer" />
         </form>
       </section>
+      <!-- Fin de la section Contact -->
 
+      <!-- Début de la modale -->
       <aside
         id="modale"
         class="modale"
@@ -103,12 +135,13 @@
         aria-modal="false"
         style="display: none"
       >
+        <!-- Contenu de la modale Galerie -->
         <div class="modale-contenu modale-galerie js-modale-stop">
           <button class="croix js-modale-close">
             <i class="fa-solid fa-xmark"></i>
           </button>
           <h2>Galerie photo</h2>
-          <div class="galerie"></div>
+          <div class="galerie-modale"></div>
           <div class="ligne"></div>
           <button class="bouton-ajout-photo">Ajouter une photo</button>
           <div class="pop-up">
@@ -125,6 +158,7 @@
           </div>
         </div>
 
+        <!-- Contenu de la modale Ajout de photo -->
         <div class="modale-contenu modale-ajout-photo js-modale-stop">
           <button class="retour js-modale-back">
             <i class="fa-solid fa-arrow-left"></i>
@@ -146,20 +180,25 @@
               <label for="photo" class="label-photo">+ Ajouter photo</label>
               <small>jpg, png : 4mo max</small>
             </div>
+            <div class="conteneur-apercu"></div>
           </div>
           <form>
             <label for="name">Titre</label>
             <input type="text" name="titre" id="titre" />
             <label for="categorie">Catégorie</label>
-            <select name="categorie" id="categorie"></select
-            ><i class="fa-solid fa-chevron-down"></i>
+            <select name="categorie" id="categorie"></select>
+            <i class="fa-solid fa-chevron-down"></i>
             <div class="ligne"></div>
-            <button type="submit" class="bouton-valider-photo">Valider</button>
+            <button type="submit" disabled class="bouton-valider-photo">
+              Valider
+            </button>
           </form>
         </div>
       </aside>
+      <!-- Fin de la modale -->
     </main>
 
+    <!-- Début du pied de page -->
     <footer>
       <nav>
         <ul>
@@ -167,5 +206,6 @@
         </ul>
       </nav>
     </footer>
+    <!-- Fin du pied de page -->
   </body>
 </html>

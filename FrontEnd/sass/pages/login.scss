@@ -1,7 +1,11 @@
 .page-actuelle {
   font-weight: 700;
 }
-
+a {
+  &:hover {
+    font-weight: 700;
+  }
+}
 #connexion {
   label {
     margin: 32px 0 8px 0; // Ajustement spécifique pour #connexion
