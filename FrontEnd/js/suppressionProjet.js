@@ -88,8 +88,6 @@ const supprimerProjetDuLocalStorage = (projet) => {
 
   // Met à jour la liste des projets dans le localStorage
   localStorage.setItem("projets", JSON.stringify(projetsMisAJour));
-
-  console.log(`Projet avec l'id ${projet.id} supprimé du localStorage.`);
 };
 
 // ********************************************

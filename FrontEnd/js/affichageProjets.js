@@ -1,4 +1,9 @@
 // ********************************************
+// * Variables globales *
+// ********************************************
+let listeProjets = []; // Stocke les projets globalement
+
+// ********************************************
 // * Configuration de l'affichage des projets *
 // ********************************************
 
@@ -64,10 +69,6 @@ const creerBoutonFiltre = (categorie) => {
             ); // Filtre par catégorie
 
       afficherProjets(projetsFiltres); // Met à jour l'affichage des projets
-
-      console.log(
-        `Catégorie sélectionnée : ${categorie}. Nombre de projets : ${projetsFiltres.length}`
-      );
     });
   }
 };
@@ -126,7 +127,8 @@ export const chargerProjets = () => {
 
 // Initialise l'application : charge les projets et affiche la galerie
 const initProjets = async () => {
-  const listeProjets = await chargerProjets(); // Récupère la liste des projets
+  listeProjets = await chargerProjets(); // Récupère la liste des projets
   afficherProjets(listeProjets); // Affiche les projets dans la galerie
+  genererBoutonsFiltres(); // Génère les boutons de filtre après avoir chargé les projets
 };
 initProjets();
