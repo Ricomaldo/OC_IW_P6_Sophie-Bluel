@@ -493,10 +493,6 @@ a:hover {
 #connexion label {
   margin: 32px 0 8px 0;
 }
-#connexion form input:active,
-#connexion form input:focus {
-  border: 2px solid #6300a0;
-}
 #connexion form input:not(:focus):invalid {
   color: white;
   border: 2px solid #b20a37;

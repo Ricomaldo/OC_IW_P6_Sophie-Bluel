@@ -40,7 +40,7 @@ export const afficherProjets = (projetsSelectionnes) => {
 // * Création des boutons de filtrage *
 // ********************************************
 
-const filtresDiv = document.querySelector(".boutons-filtre");
+const conteneurFiltres = document.querySelector(".boutons-filtre");
 
 // Crée un bouton pour une catégorie spécifique
 const creerBoutonFiltre = (categorie) => {
@@ -55,9 +55,9 @@ const creerBoutonFiltre = (categorie) => {
       : `Filtrer les projets pour afficher les projets de la catégorie ${categorie}`
   );
 
-  if (filtresDiv) {
+  if (conteneurFiltres) {
     // Ajoute le bouton à la section des filtres
-    filtresDiv.appendChild(categorieBouton);
+    conteneurFiltres.appendChild(categorieBouton);
 
     // Ajoute un gestionnaire d'événement pour filtrer les projets au clic
     categorieBouton.addEventListener("click", () => {
@@ -86,8 +86,8 @@ const genererBoutonsFiltres = () => {
     creerBoutonFiltre("Tous"); // Ajoute le bouton pour afficher tous les projets
 
     // Ajoute un bouton pour chaque catégorie unique
-    for (let eachCategorie of categoriesUniques) {
-      creerBoutonFiltre(eachCategorie);
+    for (let chaqueCategorie of categoriesUniques) {
+      creerBoutonFiltre(chaqueCategorie);
     }
   }
 };
@@ -109,10 +109,10 @@ export const chargerProjets = () => {
 
   // Sinon, récupère les projets depuis l'API
   return fetch(urlApiProjets)
-    .then((reponse) => reponse.json())
+    .then((reponse) => reponse.json()) // Convertit la réponse de la requête en un objet JavaScript en parsant le JSON
     .then((data) => {
       // Stocke les projets dans le localStorage pour une utilisation future
-      localStorage.setItem("projets", JSON.stringify(data));
+      localStorage.setItem("projets", JSON.stringify(data)); // converti en chaîne JSON
       return data;
     })
     .catch((error) => {

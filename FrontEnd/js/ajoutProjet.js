@@ -16,6 +16,8 @@ const categorieProjet = document.getElementById("categorie");
 // ********************************************
 
 // Récupère et remplit le menu déroulant des catégories
+let correspondancesCategories = new Map(); // Déclare cette variable globale
+
 export const remplirMenuCategories = () => {
   fetch("http://localhost:5678/api/categories", {
     method: "GET",
@@ -33,12 +35,13 @@ export const remplirMenuCategories = () => {
       const selectCategorie = document.getElementById("categorie");
       selectCategorie.innerHTML = ""; // Vide les options actuelles
 
-      // Ajoute les catégories au menu déroulant
+      // Ajoute les catégories au menu déroulant et les enregistre dans le mapping
       categories.forEach((categorie) => {
         const option = document.createElement("option");
         option.value = categorie.id;
         option.textContent = categorie.name;
         selectCategorie.appendChild(option);
+        correspondancesCategories.set(categorie.id, categorie.name); // Stocke dans le mapping
       });
 
       // Ajoute une option vide par défaut
@@ -131,6 +134,16 @@ const ajouterProjet = async (formData) => {
     }
 
     const nouveauProjet = await response.json();
+
+    // Ajoute le nom de la catégorie à partir du mapping
+    const nomCategorie = correspondancesCategories.get(
+      parseInt(nouveauProjet.categoryId, 10)
+    );
+    nouveauProjet.category = {
+      id: nouveauProjet.categoryId,
+      name: nomCategorie || "Inconnue", // Valeur par défaut si le nom est introuvable
+    };
+
     console.log("Projet ajouté avec succès :", nouveauProjet);
 
     // Met à jour les projets dans le localStorage
