@@ -4,7 +4,7 @@ const path = require('path');
 
 exports.resetDatabase = async (req, res) => {
     try {
-        // Supprimer tous les enregistrements des tables
+        // Supprimer tous les enregistrements des tables dans le bon ordre
         await db.works.destroy({ where: {} });
         await db.categories.destroy({ where: {} });
         await db.users.destroy({ where: {} });
@@ -49,18 +49,24 @@ exports.resetDatabase = async (req, res) => {
             { name: 'Hotels & restaurants' }
         ]);
 
-        // Créer les projets initiaux
+        // Récupérer les IDs des catégories créées
+        const categoriesMap = {};
+        categories.forEach(cat => {
+            categoriesMap[cat.name] = cat.id;
+        });
+
+        // Créer les projets initiaux avec les bons IDs de catégorie
         const projetsInitiaux = [
-            { title: 'Abajour Tahina', categoryId: 1, imageUrl: 'abajour-tahina.png' },
-            { title: 'Appartement Paris V', categoryId: 2, imageUrl: 'appartement-paris-v.png' },
-            { title: 'Restaurant Sushisen - Londres', categoryId: 3, imageUrl: 'restaurant-sushisen-londres.png' },
-            { title: 'La Balisière', categoryId: 2, imageUrl: 'la-balisiere.png' },
-            { title: 'Structures Thermopolis', categoryId: 1, imageUrl: 'structures-thermopolis.png' },
-            { title: 'Appartement Paris X', categoryId: 2, imageUrl: 'appartement-paris-x.png' },
-            { title: 'Le Coteau Cassis', categoryId: 2, imageUrl: 'le-coteau-cassis.png' },
-            { title: 'Villa Ferneze', categoryId: 2, imageUrl: 'villa-ferneze.png' },
-            { title: 'Appartement Paris XVIII', categoryId: 2, imageUrl: 'appartement-paris-xviii.png' },
-            { title: 'Hotel First Arte - New Delhi', categoryId: 3, imageUrl: 'hotel-first-arte-new-delhi.png' }
+            { title: 'Abajour Tahina', categoryId: categoriesMap['Objets'], imageUrl: 'abajour-tahina.png' },
+            { title: 'Appartement Paris V', categoryId: categoriesMap['Appartements'], imageUrl: 'appartement-paris-v.png' },
+            { title: 'Restaurant Sushisen - Londres', categoryId: categoriesMap['Hotels & restaurants'], imageUrl: 'restaurant-sushisen-londres.png' },
+            { title: 'La Balisière', categoryId: categoriesMap['Appartements'], imageUrl: 'la-balisiere.png' },
+            { title: 'Structures Thermopolis', categoryId: categoriesMap['Objets'], imageUrl: 'structures-thermopolis.png' },
+            { title: 'Appartement Paris X', categoryId: categoriesMap['Appartements'], imageUrl: 'appartement-paris-x.png' },
+            { title: 'Le Coteau Cassis', categoryId: categoriesMap['Appartements'], imageUrl: 'le-coteau-cassis.png' },
+            { title: 'Villa Ferneze', categoryId: categoriesMap['Appartements'], imageUrl: 'villa-ferneze.png' },
+            { title: 'Appartement Paris XVIII', categoryId: categoriesMap['Appartements'], imageUrl: 'appartement-paris-xviii.png' },
+            { title: 'Hotel First Arte - New Delhi', categoryId: categoriesMap['Hotels & restaurants'], imageUrl: 'hotel-first-arte-new-delhi.png' }
         ];
 
         await db.works.bulkCreate(projetsInitiaux);

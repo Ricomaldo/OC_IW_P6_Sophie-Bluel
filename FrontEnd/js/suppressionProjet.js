@@ -90,7 +90,7 @@ const supprimerProjet = async (projet) => {
       throw new Error("Token d'authentification non trouvé");
     }
 
-    const response = await fetch(`${config.apiUrl}/api/works/${projet.id}`, {
+    const response = await fetch(`${config.apiUrl}/works/${projet.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -25,7 +25,7 @@ export const afficherProjets = (projetsSelectionnes) => {
 
     // Ajoute une classe spécifique à chaque figure pour les animations
     figure.setAttribute("class", `apparition apparition--${index + 1}`);
-    projetImage.src = projet.imageUrl; // Définit l'URL de l'image du projet
+    projetImage.src = config.getImageUrl(projet.imageUrl); // Utilise la fonction utilitaire pour le chemin
     projetImage.alt = projet.title; // Ajoute une description accessible pour l'image
     projetNom.innerText = projet.title; // Définit le titre du projet
 
@@ -99,7 +99,7 @@ const genererBoutonsFiltres = () => {
 import config from "./config.js";
 
 export const chargerProjets = () => {
-  const urlApiProjets = `${config.apiUrl}/api/works`;
+  const urlApiProjets = `${config.apiUrl}/works`;
 
   // Vérifie si les projets sont déjà enregistrés dans le localStorage
   const projetsFromLocalStorage = localStorage.getItem("projets");

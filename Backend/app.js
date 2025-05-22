@@ -7,7 +7,8 @@ const yaml = require('yamljs')
 const config = require('./config/config');
 const swaggerUiDist = require('swagger-ui-dist');
 
-const swaggerDocs = yaml.load('swagger.yaml')
+const swaggerDocs = yaml.load(path.join(__dirname, 'public/swagger/swagger.yaml'));
+console.log('Swagger YAML chargé :', JSON.stringify(swaggerDocs, null, 2));
 const app = express()
 
 // Middleware de base
@@ -21,6 +22,7 @@ app.use(helmet({
 // Servir les fichiers statiques
 app.use('/images', express.static(config.paths.images))
 app.use('/public', express.static(config.paths.public))
+app.use('/api/images', express.static(config.paths.images));
 
 // Routes de l'API
 const db = require("./models");
@@ -45,15 +47,9 @@ app.use(swaggerPath, express.static(path.join(__dirname, 'public/swagger')));
 
 // 2. Initialiser Swagger UI
 app.use(swaggerPath, swaggerUi.serve); // Doit venir APRES le static
-app.use(swaggerPath, swaggerUi.setup(null, { // Laisse swaggerDocs à null, il le prendra depuis l'URL
+app.use(swaggerPath, swaggerUi.setup(swaggerDocs, {
   explorer: true,
-  swaggerOptions: {
-    url: `${swaggerPath}/swagger.yaml`, // Chemin vers le YAML servi par le static ci-dessus
-    persistAuthorization: true
-  },
   customSiteTitle: "API Documentation - Sophie Bluel",
-  // customfavIcon: `${swaggerPath}/favicon-32x32.png`, // Déjà servi par le static
-  // customCssUrl: `${swaggerPath}/swagger-ui.css`    // Déjà servi par le static
 }));
 
 module.exports = app;

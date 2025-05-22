@@ -1,7 +1,5 @@
 const config = {
-  apiUrl: window.location.hostname === 'localhost' 
-    ? 'http://localhost:5678'
-    : 'https://portfolio.irimwebforge.com/projects/OC_IW_P6_Sophie-Bluel',
+  apiUrl: "/projects/OC_IW_P6_Sophie-Bluel/api",
   
   getImageUrl: (filename) => {
     if (!filename) return '';

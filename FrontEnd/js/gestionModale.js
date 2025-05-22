@@ -131,7 +131,7 @@ export const afficherProjetsModale = () => {
     conteneurImage.classList.add("projet-container");
 
     const projetImage = document.createElement("img");
-    projetImage.src = projet.imageUrl; // Définit l'image du projet
+    projetImage.src = config.getImageUrl(projet.imageUrl); // Utilise la fonction utilitaire pour le chemin
     projetImage.alt = projet.title; // Ajoute un texte alternatif
     conteneurImage.appendChild(projetImage);
 
@@ -213,7 +213,7 @@ export const reinitialiserBaseDeDonnees = async () => {
             return;
         }
 
-        const response = await fetch(`${config.API_BASE_URL}/admin/reset`, {
+        const response = await fetch(`${config.apiUrl}/admin/reset`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
