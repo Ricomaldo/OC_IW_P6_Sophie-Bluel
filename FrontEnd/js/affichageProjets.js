@@ -96,8 +96,10 @@ const genererBoutonsFiltres = () => {
 // * Récupération des projets et Initialisation de l'affichage
 // ********************************************
 
+import config from "./config.js";
+
 export const chargerProjets = () => {
-  const urlApiProjets = "http://localhost:5678/api/works";
+  const urlApiProjets = `${config.apiUrl}/api/works`;
 
   // Vérifie si les projets sont déjà enregistrés dans le localStorage
   const projetsFromLocalStorage = localStorage.getItem("projets");

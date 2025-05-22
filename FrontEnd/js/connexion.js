@@ -1,7 +1,9 @@
+import config from "./config.js";
 // ********************************************
 // * 1. Importations et constantes globales *
 // ********************************************
 import { ouvrirGalerieModale } from "./gestionModale.js";
+import { reinitialiserBaseDeDonnees } from "./gestionModale.js";
 
 // Messages d'erreur pour les validations
 const MESSAGES_ERREUR = {
@@ -81,6 +83,17 @@ if (verifToken) {
   <i class="fa-regular fa-pen-to-square"></i>
   <p>modifier</p>
   `;
+
+  // Ajout du bouton de réinitialisation dans la barre d'édition
+  const resetBtn = document.createElement("button");
+  resetBtn.id = "reset-btn";
+  resetBtn.innerHTML = `
+  <i class="fa-solid fa-rotate-left"></i>
+  <span>Réinitialiser</span>
+  `;
+  resetBtn.addEventListener("click", reinitialiserBaseDeDonnees);
+  document.querySelector(".barre-mode-edition").appendChild(resetBtn);
+
   if (window.location.pathname.endsWith("index.html")) {
     document.getElementById("conteneur-titre-portfolio").appendChild(adminBtn);
     document.querySelector(".boutons-filtre").style.display = "none";
@@ -127,7 +140,7 @@ if (formulaireConnexion) {
       return;
     }
 
-    const urlApiConnexion = "http://localhost:5678/api/users/login";
+    const urlApiConnexion = config.apiUrl + "/users/login";
     const identifiants = { email: adresseEmail, password: motDePasse };
     authentifierUtilisateur(urlApiConnexion, identifiants);
   });

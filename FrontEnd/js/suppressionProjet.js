@@ -4,6 +4,7 @@
 
 import { afficherProjetsModale } from "./gestionModale.js";
 import { afficherProjets, chargerProjets } from "./affichageProjets.js";
+import config from "./config.js";
 
 // Référence au projet actuellement en cours de suppression
 let projetASupprimer = null;
@@ -12,82 +13,121 @@ let projetASupprimer = null;
 // * Gestion Pop-Up (pour confirmation de suppression) *
 // ********************************************
 
-// Note : Ce code gère l'affichage d'une pop-up pour demander la confirmation
-// avant la suppression d'un projet. Désactivé actuellement mais prêt à être réactivé.
-//
-// const afficherPopup = (projet) => {
-//   const popUp = document.querySelector(".pop-up");
-//   popUp.style.display = "flex"; // Affiche la pop-up
-//   popUp.classList.add("pop-up-visible");
+const afficherPopup = (projet) => {
+  const popUp = document.querySelector(".pop-up");
+  if (!popUp) return;
 
-//   const projetTitre = popUp.querySelector("h3"); // Met à jour le titre dans la pop-up
-//   projetTitre.textContent = "";
-//   projetTitre.textContent = `Supprimer ${projet.title} ?`;
+  // Affiche la pop-up
+  popUp.style.display = "flex";
+  popUp.classList.add("pop-up-visible");
 
-//   const boutonAnnuler = document.querySelector(".pop-up__reponse-annuler");
-//   boutonAnnuler.addEventListener("click", (e) => {
-//     fermerPopup(); // Annule la suppression et ferme la pop-up
-//   });
-// };
+  // Met à jour le titre dans la pop-up
+  const projetTitre = popUp.querySelector("h3");
+  if (projetTitre) {
+    projetTitre.textContent = `Supprimer ${projet.title} ?`;
+  }
 
-// const fermerPopup = () => {
-//   const popUp = document.querySelector(".pop-up");
-//   popUp.style.display = "none"; // Masque la pop-up
+  // Gestion du bouton Annuler
+  const boutonAnnuler = popUp.querySelector(".pop-up__reponse-annuler");
+  if (boutonAnnuler) {
+    const annulerHandler = () => {
+      fermerPopup();
+      boutonAnnuler.removeEventListener("click", annulerHandler);
+    };
+    boutonAnnuler.addEventListener("click", annulerHandler);
+  }
 
-//   const modale = document.querySelector(".modale");
-//   modale.removeEventListener("click", fermerPopup); // Retire les écouteurs liés à la pop-up
+  // Gestion du bouton Confirmer
+  const boutonConfirmer = popUp.querySelector(".pop-up__reponse-supprimer");
+  if (boutonConfirmer) {
+    const confirmerHandler = async () => {
+      await supprimerProjet(projet);
+      supprimerProjetDuLocalStorage(projet);
+      await mettreAJourProjets();
+      fermerPopup();
+      boutonConfirmer.removeEventListener("click", confirmerHandler);
+    };
+    boutonConfirmer.addEventListener("click", confirmerHandler);
+  }
 
-//   document.querySelectorAll(".js-modale-stop").forEach((element) => {
-//     element.removeEventListener("click", fermerPopup);
-//   });
+  // Fermeture au clic en dehors
+  const clickOutsideHandler = (e) => {
+    if (e.target === popUp) {
+      fermerPopup();
+      popUp.removeEventListener("click", clickOutsideHandler);
+    }
+  };
+  popUp.addEventListener("click", clickOutsideHandler);
+};
 
-//   popUp.classList.remove("pop-up-visible"); // Réinitialise l'état de la pop-up
-// };
+const fermerPopup = () => {
+  const popUp = document.querySelector(".pop-up");
+  if (!popUp) return;
+
+  // Masque la pop-up
+  popUp.style.display = "none";
+  popUp.classList.remove("pop-up-visible");
+
+  // Retire tous les écouteurs d'événements
+  const modale = document.querySelector(".modale");
+  if (modale) {
+    modale.removeEventListener("click", fermerPopup);
+  }
+
+  document.querySelectorAll(".js-modale-stop").forEach((element) => {
+    element.removeEventListener("click", fermerPopup);
+  });
+};
 
 // ********************************************
 // * Fonctions de suppression *
 // ********************************************
 
-const supprimerProjet = (projet, urlApiConnexion) => {
-  // Récupère le token pour l'authentification
-  const valideToken = sessionStorage.getItem("token");
+const supprimerProjet = async (projet) => {
+  try {
+    const valideToken = sessionStorage.getItem("token");
+    if (!valideToken) {
+      throw new Error("Token d'authentification non trouvé");
+    }
 
-  // Effectue une requête DELETE pour supprimer le projet côté serveur
-  fetch(`http://localhost:5678/api/works/${projet.id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${valideToken}`,
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Projet supprimé avec succès !"); // Confirmation de suppression côté serveur
-      } else {
-        console.error(
-          "Échec de la suppression :",
-          response.status,
-          response.statusText
-        );
-      }
-    })
-    .catch((error) => {
-      // Gestion des erreurs réseau ou de la requête
-      console.error("Erreur réseau ou fetch :", error);
+    const response = await fetch(`${config.apiUrl}/api/works/${projet.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${valideToken}`,
+      },
     });
+
+    if (!response.ok) {
+      throw new Error(`Échec de la suppression : ${response.status} ${response.statusText}`);
+    }
+
+    console.log("Projet supprimé avec succès !");
+  } catch (error) {
+    console.error("Erreur lors de la suppression :", error);
+    throw error;
+  }
 };
 
 const supprimerProjetDuLocalStorage = (projet) => {
-  // Récupère la liste des projets dans le localStorage
-  const projetsOld = JSON.parse(localStorage.getItem("projets"));
+  try {
+    const projetsOld = JSON.parse(localStorage.getItem("projets") || "[]");
+    const projetsMisAJour = projetsOld.filter(projetOld => projetOld.id !== projet.id);
+    localStorage.setItem("projets", JSON.stringify(projetsMisAJour));
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du localStorage :", error);
+  }
+};
 
-  // Filtre les projets pour exclure celui qui doit être supprimé
-  const projetsMisAJour = projetsOld.filter(
-    (projetOld) => projetOld.id !== projet.id
-  );
-
-  // Met à jour la liste des projets dans le localStorage
-  localStorage.setItem("projets", JSON.stringify(projetsMisAJour));
+const mettreAJourProjets = async () => {
+  try {
+    const projets = await chargerProjets();
+    afficherProjets(projets);
+    afficherProjetsModale();
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour des projets :", error);
+    throw error;
+  }
 };
 
 // ********************************************
@@ -95,48 +135,11 @@ const supprimerProjetDuLocalStorage = (projet) => {
 // ********************************************
 
 export const routineSuppressionProjet = (projet) => {
-  // Stocke temporairement le projet à supprimer
+  if (!projet) {
+    console.error("Aucun projet fourni pour la suppression");
+    return;
+  }
+
   projetASupprimer = projet;
-
-  // Note : Le code de la pop-up peut être activé pour confirmer la suppression
-  // afficherPopup(projetASupprimer);
-  //
-  // const boutonConfirmation = document.querySelector(
-  //   ".pop-up__reponse-supprimer"
-  // );
-  //
-  // if (boutonConfirmation && projetASupprimer) {
-  //   boutonConfirmation.addEventListener(
-  //     "click",
-  //     function confirmerSuppression() {
-
-  // Supprime le projet côté serveur
-  supprimerProjet(projetASupprimer);
-
-  // Supprime le projet du localStorage
-  supprimerProjetDuLocalStorage(projetASupprimer);
-
-  const mettreAJourProjets = async () => {
-    try {
-      // Recharge la liste des projets et met à jour l'affichage
-      const projets = await chargerProjets();
-      afficherProjets(projets);
-      afficherProjetsModale(); // Met à jour l'affichage dans la modale
-    } catch (error) {
-      // Gestion des erreurs lors de la récupération des projets
-      console.error("Erreur lors de la récupération des projets :", error);
-    }
-  };
-
-  mettreAJourProjets(); // Actualise les projets après suppression
-
-  // Réinitialise la variable après la suppression
-  projetASupprimer = null;
-
-  // Note : Fermer la pop-up si elle est utilisée
-  // fermerPopup();
-  // boutonConfirmation.removeEventListener("click", confirmerSuppression);
-  //   }
-  // );
-  // }
+  afficherPopup(projetASupprimer);
 };

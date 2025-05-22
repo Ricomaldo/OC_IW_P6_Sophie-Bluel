@@ -4,6 +4,7 @@
 
 import { afficherProjets, chargerProjets } from "./affichageProjets.js";
 import { redimensionnerImage } from "./redimensionnement.js";
+import config from "./config.js";
 
 // Sélection des éléments principaux du DOM
 const formulaireAjout = document.querySelector(".modale-ajout-photo form");
@@ -19,7 +20,7 @@ const categorieProjet = document.getElementById("categorie");
 let correspondancesCategories = new Map(); // Déclare cette variable globale
 
 export const remplirMenuCategories = () => {
-  fetch("http://localhost:5678/api/categories", {
+  fetch(config.API_BASE_URL + "/categories", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`, // Authentification
@@ -121,7 +122,7 @@ const ajouterProjet = async (formData) => {
 
   try {
     // Envoie une requête POST pour ajouter le projet
-    const response = await fetch("http://localhost:5678/api/works", {
+    const response = await fetch(config.API_BASE_URL + "/works", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${valideToken}`,

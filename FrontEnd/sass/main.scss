@@ -27,11 +27,12 @@
 
 body {
   margin: auto;
-  font-family: "Work Sans";
+  font-family: $font-family_1;
   font-size: 14px;
   background-color: $white;
   color: $black;
 }
+
 main {
   max-width: 950px;
   margin: auto;
@@ -42,7 +43,7 @@ section {
 }
 
 h2 {
-  font-family: "Syne";
+  font-family: $font-family_2;
   font-weight: 700;
   font-size: 30px;
   color: $secundary-color;
@@ -50,6 +51,7 @@ h2 {
 
 a {
   text-decoration: none;
+  color: $black;
 }
 
 .formulaire {

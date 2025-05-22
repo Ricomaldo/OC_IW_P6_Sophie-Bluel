@@ -45,7 +45,7 @@ blockquote, q {
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -236,13 +236,16 @@ footer nav ul {
 .modale .modale-galerie .galerie-modale .projet-container i {
   color: white;
   background-color: black;
-  width: 20px; /* Taille ajustée pour une meilleure visibilité */
+  width: 20px;
+  /* Taille ajustée pour une meilleure visibilité */
   height: 20px;
-  font-size: 12px; /* Ajuste la taille de l'icône pour un meilleur rendu */
+  font-size: 12px;
+  /* Ajuste la taille de l'icône pour un meilleur rendu */
   border-radius: 3px;
   position: absolute;
   top: 6px;
-  right: 6px; /* Place l'icône dans le coin supérieur droit */
+  right: 6px;
+  /* Place l'icône dans le coin supérieur droit */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -490,6 +493,41 @@ a:hover {
   font-weight: 700;
 }
 
+.demo-credentials {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 24px auto 28px auto;
+  padding: 18px 20px 14px 20px;
+  background: linear-gradient(90deg, #fffbe6 0%, #f6f6f6 100%);
+  border: 1.5px solid #ffe066;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(255, 224, 102, 0.1);
+  width: 100%;
+  max-width: 350px;
+}
+.demo-credentials__icon {
+  font-size: 28px;
+  color: #e1b800;
+  margin-bottom: 2px;
+}
+.demo-credentials__title {
+  font-weight: 700;
+  color: #bfa100;
+  margin-bottom: 6px;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+.demo-credentials p {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+}
+.demo-credentials p strong {
+  color: #bfa100;
+}
+
 #connexion label {
   margin: 32px 0 8px 0;
 }
@@ -507,7 +545,6 @@ a:hover {
     transform: translateX(-1%);
   }
 }
-
 #erreur-connexion {
   height: 50px;
   width: 50%;
@@ -601,10 +638,10 @@ a:hover {
 .modale {
   animation: fadeIn 0.3s both;
 }
-.modale[aria-hidden=true] {
+.modale[aria-hidden="true"] {
   animation-name: fadeOut;
 }
-.modale[aria-hidden=true] .modale-galerie, .modale[aria-hidden=true] .modale-ajout-photo {
+.modale[aria-hidden="true"] .modale-galerie, .modale[aria-hidden="true"] .modale-ajout-photo {
   animation: slideToBottom 0.3s 0.1s both;
 }
 .modale .modale-galerie {
@@ -675,6 +712,7 @@ h2 {
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 .formulaire {
@@ -701,7 +739,7 @@ a {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-.formulaire input[type=submit] {
+.formulaire input[type="submit"] {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -714,7 +752,7 @@ a {
   font-size: 14px;
   padding: 11px;
 }
-.formulaire input[type=submit]:hover {
+.formulaire input[type="submit"]:hover {
   background-color: #0e2f28;
 }
 

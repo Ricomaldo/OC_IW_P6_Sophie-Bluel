@@ -9,6 +9,7 @@ import {
   verifierChamps,
   gererChargementImage,
 } from "./ajoutProjet.js";
+import config from "./config.js";
 
 // Référence à la modale active
 let modaleActive = null;
@@ -197,4 +198,38 @@ const reinitialiserFormulaireAjout = () => {
   messageAjoutPhoto.style.display = "flex";
 
   inputImage.removeEventListener("change", gererChargementImage); // Supprime l'écouteur
+};
+
+// Fonction pour réinitialiser la base de données
+export const reinitialiserBaseDeDonnees = async () => {
+    try {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+            throw new Error('Non autorisé');
+        }
+
+        const confirmation = confirm('Êtes-vous sûr de vouloir réinitialiser la base de données ? Cette action est irréversible.');
+        if (!confirmation) {
+            return;
+        }
+
+        const response = await fetch(`${config.API_BASE_URL}/admin/reset`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la réinitialisation');
+        }
+
+        alert('Base de données réinitialisée avec succès. La page va être rechargée.');
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.reload();
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur lors de la réinitialisation de la base de données');
+    }
 };
